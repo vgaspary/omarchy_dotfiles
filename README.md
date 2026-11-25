@@ -10,6 +10,8 @@ Each top-level directory is a Stow package mirroring `$HOME`:
 - `omarchy/` — `~/.config/omarchy/{shell.json,shell.toml}` and custom `vanand.workspaces` plugin
 - `terminals/` — Alacritty, Foot, Ghostty, and Kitty configs
 - `git/` — `~/.config/git/config`
+- `fontconfig/` — `~/.config/fontconfig/conf.d/60-armenian.conf` (Armenian glyph fallback to Noto)
+- `chrome/` — `~/.config/fontconfig/chrome-fonts.conf`, `~/.local/bin/google-chrome-stable` wrapper, and `~/.local/share/applications/google-chrome.desktop` override
 - `bootstrap.sh` — installs packages/themes, sets font, removes unwanted apps, and stows all packages
 
 ## Setup on a fresh Omarchy machine

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-STOW_PACKAGES=(hypr omarchy terminals git)
+STOW_PACKAGES=(hypr omarchy terminals git fontconfig chrome)
 
 # ---------------------------------------------------------------------------
 # 1. Remove unwanted preinstalled apps (edit these lists as you debloat)
