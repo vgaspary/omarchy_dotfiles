@@ -110,3 +110,6 @@ o.bind("CTRL + ALT + B", "Browser", { omarchy = "browser" })
 o.bind("CTRL + ALT + A", "Agent", "omarchy-agent --pick")
 o.bind("CTRL + ALT + M", "Google Maps", { webapp = "https://maps.google.com/", focus = true })
 o.bind("CTRL + ALT + S", "Screenshot (region)", "omarchy-capture-screenshot region")
+
+-- Lock system with CTRL + ESCAPE (since SUPER + CTRL + L is used for swapping windows).
+o.bind("CTRL + ESCAPE", "Lock system", "omarchy-system-lock")
