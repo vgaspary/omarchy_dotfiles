@@ -101,7 +101,7 @@ hl.unbind("PRINT")
 hl.unbind("SUPER + CTRL + ALT + C")
 
 -- Launcher mappings (CTRL + ALT + <letter>).
-o.bind("CTRL + ALT + T", "Terminal", o.launch_terminal())
+o.bind("CTRL + ALT + T", "Terminal", { launch = 'xdg-terminal-exec --dir="$HOME"' })
 o.bind("CTRL + ALT + B", "Browser", { omarchy = "browser" })
 o.bind("CTRL + ALT + A", "Agent", "omarchy-agent --pick")
 o.bind("CTRL + ALT + M", "Google Maps", { webapp = "https://maps.google.com/", focus = true })
