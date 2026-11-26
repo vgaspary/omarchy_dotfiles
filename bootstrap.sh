@@ -5,25 +5,101 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 STOW_PACKAGES=(hypr omarchy terminals git fontconfig chrome)
 
 # ---------------------------------------------------------------------------
-# 1. Remove unwanted preinstalled apps (edit these lists as you debloat)
+# 1. Install extra packages & set defaults (before dropping foot / chromium)
 # ---------------------------------------------------------------------------
+ADD_PKGS=(
+  stow
+  ghostty
+  google-chrome
+  ttf-iosevkaterm-nerd
+)
+
+if (( ${#ADD_PKGS[@]} > 0 )); then
+  echo "==> Ensuring packages are installed..."
+  omarchy pkg add "${ADD_PKGS[@]}"
+fi
+
+echo "==> Setting default terminal and browser..."
+omarchy default terminal ghostty
+omarchy default browser chrome
+
+# ---------------------------------------------------------------------------
+# 2. Remove unwanted preinstalled apps, web apps, services & tools
+# ---------------------------------------------------------------------------
+echo "==> Removing all preinstalled web apps..."
+omarchy webapp remove all
+
+if omarchy pkg present superwhisper-bin; then
+  echo "==> Removing Superwhisper dictation..."
+  omarchy remove dictation superwhisper
+fi
+
+echo "==> Disabling unwanted services..."
+sudo systemctl disable --now cups.service cups.socket cups-browsed.service docker.service docker.socket 2>/dev/null || true
+systemctl --user disable --now omarchy-fcitx5.service 2>/dev/null || true
+
 REMOVE_PKGS=(
-  # Examples:
-  # signal-desktop
-  # obsidian
-  # spotify
-)
+  # Omarchy mini-apps (keeping omacalc, disktree-bin, omasnap, signed)
+  hype
+  monologue
+  omacut
+  omawrite
+  aether
 
-REMOVE_WEBAPPS=(
-  # Examples:
-  # "HEY"
-  # "Basecamp"
-  # "X"
-)
+  # Office & notes (keeping Papers via Nautilus sushi previewer)
+  libreoffice-fresh
+  obsidian
+  evince
 
-REMOVE_TUIS=(
-  # Examples:
-  # "Disk Usage"
+  # Media (keeping mpv, imv, gpu-screen-recorder)
+  pinta
+  dotnet-runtime
+  cliamp
+  yt-dlp
+
+  # Remote & dictation (keeping localsend)
+  moonlight-qt
+  gliff
+  superwhisper-bin
+
+  # Preinstalled browser & terminal (replaced by google-chrome & ghostty)
+  chromium
+  foot
+
+  # Disks & printing (keeping Files / nautilus + sushi)
+  gnome-disk-utility
+  system-config-printer
+  cups
+  cups-filters
+  cups-pk-helper
+
+  # Dev & CLI tools (keeping neovim, mise-bin, ttfx)
+  omarchy-nvim
+  docker
+  docker-buildx
+  docker-compose
+  ufw-docker
+  herdr
+  lazygit
+  btop
+  tmux
+  fastfetch
+  tobi-try
+  ruby
+  lua51
+  luarocks
+  qemu-user-static-binfmt
+
+  # CJK fonts & Fcitx5 input method stack
+  fcitx5
+  fcitx5-chewing
+  fcitx5-chinese-addons
+  fcitx5-gtk
+  fcitx5-hangul
+  fcitx5-mozc
+  fcitx5-qt
+  fcitx5-table-extra
+  noto-fonts-cjk
 )
 
 if (( ${#REMOVE_PKGS[@]} > 0 )); then
@@ -31,27 +107,18 @@ if (( ${#REMOVE_PKGS[@]} > 0 )); then
   omarchy pkg drop "${REMOVE_PKGS[@]}"
 fi
 
-for app in "${REMOVE_WEBAPPS[@]}"; do
-  echo "==> Removing webapp: $app"
-  omarchy webapp remove "$app" || true
-done
-
-for app in "${REMOVE_TUIS[@]}"; do
-  echo "==> Removing TUI: $app"
-  omarchy tui remove "$app" || true
-done
-
-# ---------------------------------------------------------------------------
-# 2. Install extra packages
-# ---------------------------------------------------------------------------
-ADD_PKGS=(
-  stow
-)
-
-if (( ${#ADD_PKGS[@]} > 0 )); then
-  echo "==> Ensuring packages are installed..."
-  omarchy pkg add "${ADD_PKGS[@]}"
+if command -v mise &>/dev/null && mise ls --installed gh &>/dev/null; then
+  echo "==> Removing gh from mise..."
+  mise uninstall gh || true
 fi
+
+# Clean up leftover desktop/D-Bus/MIME entries for removed apps
+rm -f "$HOME/.local/share/applications/foot.desktop"
+rm -f "$HOME/.local/share/dbus-1/services/org.fcitx.Fcitx5.service"
+if [[ -f "$HOME/.config/mimeapps.list" ]]; then
+  sed -i '/=HEY\.desktop$/d; /=superwhisper-url\.desktop$/d' "$HOME/.config/mimeapps.list"
+fi
+update-desktop-database "$HOME/.local/share/applications" &>/dev/null || true
 
 # ---------------------------------------------------------------------------
 # 3. Install custom Omarchy themes (skip if already installed)

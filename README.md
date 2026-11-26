@@ -7,7 +7,7 @@ Personal Omarchy & Hyprland configuration managed with [GNU Stow](https://www.gn
 Each top-level directory is a Stow package mirroring `$HOME`:
 
 - `hypr/` — `~/.config/hypr/{bindings.lua,hyprland.lua}` *(excludes machine-specific `monitors.lua`)*
-- `omarchy/` — `~/.config/omarchy/{shell.json,shell.toml}` and custom `vanand.workspaces` plugin
+- `omarchy/` — `~/.config/omarchy/{shell.json,shell.toml}`, custom `vanand.workspaces` plugin, and `~/.config/environment.d/10-omarchy-fcitx.conf` (shadows Fcitx5 env vars)
 - `terminals/` — Alacritty, Foot, Ghostty, and Kitty configs
 - `git/` — `~/.config/git/config`
 - `fontconfig/` — `~/.config/fontconfig/conf.d/60-armenian.conf` (Armenian glyph fallback to Noto)

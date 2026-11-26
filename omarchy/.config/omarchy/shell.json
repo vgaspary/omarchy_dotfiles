@@ -1,19 +1,13 @@
 {
-  "version": 1,
-  "idle": {
-    "screensaver": 150,
-    "lock": 300
-  },
   "bar": {
-    "position": "top",
-    "background": "opaque",
+    "background": "none",
     "layout": {
-      "left": [
+      "center": [
         {
-          "id": "omarchy.menu"
-        },
-        {
-          "id": "vanand.workspaces"
+          "format": "dddd HH:mm",
+          "formatAlt": "d MMMM 'W'ww yyyy",
+          "id": "omarchy.clock",
+          "verticalFormat": "HH\n—\nmm"
         }
       ],
       "centerBegin": [
@@ -21,45 +15,20 @@
           "id": "omarchy.indicators"
         }
       ],
-      "center": [
-        {
-          "id": "omarchy.clock",
-          "format": "dddd HH:mm",
-          "formatAlt": "d MMMM 'W'ww yyyy",
-          "verticalFormat": "HH\n—\nmm"
-        }
-      ],
       "centerEnd": [
-        {
-          "id": "omarchy.elsewhen",
-          "cities": [
-            {
-              "name": "Berlin",
-              "zone": "Europe/Berlin"
-            },
-            {
-              "name": "Dubai",
-              "zone": "Asia/Dubai"
-            },
-            {
-              "name": "Tokyo",
-              "zone": "Asia/Tokyo"
-            },
-            {
-              "name": "Los Angeles",
-              "zone": "America/Los_Angeles"
-            },
-            {
-              "name": "New York",
-              "zone": "America/New_York"
-            }
-          ]
-        },
         {
           "id": "omarchy.weather"
         },
         {
           "id": "omarchy.system-update"
+        }
+      ],
+      "left": [
+        {
+          "id": "omarchy.menu"
+        },
+        {
+          "id": "vanand.workspaces"
         }
       ],
       "right": [
@@ -88,24 +57,23 @@
           "id": "omarchy.power"
         }
       ],
-      "tray": [
-        {
-          "id": "superwhisper.panel"
-        }
-      ]
-    }
+      "tray": []
+    },
+    "position": "top"
   },
   "dock": {
-    "position": "bottom",
     "pinned": [
       "org.gnome.Nautilus",
-      "chromium",
-      "foot",
-      "omacalc",
-      "omawrite",
-      "X",
-      "YouTube"
-    ]
+      "google-chrome",
+      "com.mitchellh.ghostty",
+      "omacalc"
+    ],
+    "position": "bottom"
   },
-  "plugins": []
+  "idle": {
+    "lock": 300,
+    "screensaver": 150
+  },
+  "plugins": [],
+  "version": 1
 }
