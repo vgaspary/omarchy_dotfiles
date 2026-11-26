@@ -86,6 +86,10 @@ else
   o.bind("ALT + SPACE", "Omarchy menu", { menu = "root" })
 end
 
+-- Open Apps with SUPER + SPACE instead of SUPER + ALT + SPACE.
+hl.unbind("SUPER + ALT + SPACE")
+o.bind("SUPER + SPACE", "Apps", "omarchy-shell omarchy.dock apps")
+
 -- Remove default app, agent, activity, and screenshot launcher bindings
 -- (preinstalled app/webapp bindings are disabled via omarchy_preinstalled_bindings = false in hyprland.lua).
 hl.unbind("SUPER + RETURN")
